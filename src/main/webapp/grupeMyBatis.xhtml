@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <!-- Title of the Page -->
+    <h:head>
+        <title>Grupės MyBatis Puslapis</title>
+    </h:head>
+
+    <h:body>
+        <!-- Title of the Section -->
+        <h2>Esamos Grupės (MyBatis)</h2>
+
+        <!-- Display all existing groups -->
+        <h:dataTable value="#{grupeBeanMyBatis.visosGrupes}" var="grupe" border="1">
+            <h:column>
+                <f:facet name="header">ID</f:facet>
+                #{grupe.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Specialybė</f:facet>
+                #{grupe.specialybe}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Kursas</f:facet>
+                #{grupe.kursas}
+            </h:column>
+        </h:dataTable>
+
+        <hr />
+
+        <!-- Form to add a new group -->
+        <h2>Pridėti naują grupę (MyBatis)</h2>
+        <h:form>
+            <h:outputLabel value="Specialybė: "/>
+            <h:inputText value="#{grupeBeanMyBatis.naujaGrupe.specialybe}" required="true"/><br/><br/>
+
+            <h:outputLabel value="Kursas: "/>
+            <h:inputText value="#{grupeBeanMyBatis.naujaGrupe.kursas}" required="true"/><br/><br/>
+
+            <!-- Submit button to add the group -->
+            <h:commandButton value="Pridėti Grupę (MyBatis)" action="#{grupeBeanMyBatis.pridetiGrupe}"/>
+        </h:form>
+    </h:body>
+</f:view>
+</html>
