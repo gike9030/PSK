@@ -34,4 +34,12 @@ public class GrupeServiceMyBatis {
             session.commit();  // Commit the transaction
         }
     }
+
+    public Grupe getGrupeById(Long id) {
+        try (SqlSession session = sqlSessionFactory.openSession()) {
+            GrupeMapper mapper = session.getMapper(GrupeMapper.class);
+            return mapper.findById(id); // Return the fetched Grupe object
+        }
+    }
+
 }

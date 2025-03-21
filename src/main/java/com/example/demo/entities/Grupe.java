@@ -67,4 +67,19 @@ public class Grupe {
                 ", studentai=" + studentai +
                 '}';
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Grupe grupe = (Grupe) o;
+
+        return id != null ? id.equals(grupe.id) : grupe.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
 }

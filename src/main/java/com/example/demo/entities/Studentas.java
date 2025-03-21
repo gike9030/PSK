@@ -18,6 +18,9 @@ public class Studentas {
     private Grupe grupe;
 
     @ManyToMany
+    @JoinTable(name = "studentas_kursas",
+            joinColumns = @JoinColumn(name = "studentas_id"),
+            inverseJoinColumns = @JoinColumn(name = "kursas_id"))
     private List<PasirenkamasKursas> pasirenkamiKursai = new ArrayList<>();
 
     // Constructors
@@ -26,6 +29,14 @@ public class Studentas {
     public Studentas(String pavadinimas, String vardas) {
         this.pavadinimas = pavadinimas;
         this.vardas = vardas;
+    }
+
+    public List<PasirenkamasKursas> getPasirenkamiKursai() {
+        return pasirenkamiKursai;
+    }
+
+    public void setPasirenkamiKursai(List<PasirenkamasKursas> pasirenkamiKursai) {
+        this.pasirenkamiKursai = pasirenkamiKursai;
     }
 
     // Getters and Setters
@@ -61,14 +72,6 @@ public class Studentas {
         this.grupe = grupe;
     }
 
-    public List<PasirenkamasKursas> getPasirenkamiKursai() {
-        return pasirenkamiKursai;
-    }
-
-    public void setPasirenkamiKursai(List<PasirenkamasKursas> pasirenkamiKursai) {
-        this.pasirenkamiKursai = pasirenkamiKursai;
-    }
-
     @Override
     public String toString() {
         return "Studentas{" +
@@ -76,7 +79,6 @@ public class Studentas {
                 ", pavadinimas='" + pavadinimas + '\'' +
                 ", vardas='" + vardas + '\'' +
                 ", grupe=" + (grupe != null ? grupe.getId() : "null") +
-                ", pasirenkamiKursai=" + pasirenkamiKursai.size() +
                 '}';
     }
 }

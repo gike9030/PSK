@@ -5,6 +5,7 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Singleton;
 
 import com.example.demo.mybatis.mappers.GrupeMapper;
+import com.example.demo.mybatis.mappers.PasirenkamasKursasMapper;
 import com.example.demo.mybatis.mappers.StudentasMapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSession;
@@ -52,5 +53,11 @@ public class MyBatisProducer {
     @ApplicationScoped
     public GrupeMapper produceGrupeMapper(SqlSession sqlSession) {
         return sqlSession.getMapper(GrupeMapper.class); // Producing GrupeMapper
+    }
+
+    @Produces
+    @ApplicationScoped
+    public PasirenkamasKursasMapper producePasirenkamasKursasMapper(SqlSession sqlSession) {
+        return sqlSession.getMapper(PasirenkamasKursasMapper.class);
     }
 }

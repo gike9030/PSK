@@ -15,5 +15,7 @@
     <mappers>
         <!-- Add this line if not present -->
         <mapper class="com.example.demo.mybatis.mappers.GrupeMapper"/>
+        <mapper class="com.example.demo.mybatis.mappers.StudentasMapper"/>
+        <mapper class="com.example.demo.mybatis.mappers.PasirenkamasKursasMapper"/>
     </mappers>
 </configuration>
