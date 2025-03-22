@@ -35,11 +35,9 @@ public class PasirenkamasKursasBeanMyBatis implements Serializable {
     public PasirenkamasKursas getNaujasKursas() {
         return naujasKursas;
     }
-
     public void setNaujasKursas(PasirenkamasKursas naujasKursas) {
         this.naujasKursas = naujasKursas;
     }
-
     public List<PasirenkamasKursas> getVisiKursai() {
         return visiKursai;
     }

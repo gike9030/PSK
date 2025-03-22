@@ -11,7 +11,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 
-@Named("grupeBeanMyBatis")  // Make sure this name matches the one used in the XHTML
+@Named("grupeBeanMyBatis")
 @RequestScoped
 public class GrupeBeanMyBatis implements Serializable {
 
@@ -26,22 +26,20 @@ public class GrupeBeanMyBatis implements Serializable {
         visosGrupes = grupeMapper.findAll();
     }
 
-    public List<Grupe> getVisosGrupes() {
-        return visosGrupes;
-    }
-
-    public Grupe getNaujaGrupe() {
-        return naujaGrupe;
-    }
-
-    public void setNaujaGrupe(Grupe naujaGrupe) {
-        this.naujaGrupe = naujaGrupe;
-    }
-
-    // Add a new group using MyBatis
     public void pridetiGrupe() {
         grupeMapper.insert(naujaGrupe);
         naujaGrupe = new Grupe();  // Reset after adding
         visosGrupes = grupeMapper.findAll();
+    }
+
+    //getters, setters
+    public List<Grupe> getVisosGrupes() {
+        return visosGrupes;
+    }
+    public Grupe getNaujaGrupe() {
+        return naujaGrupe;
+    }
+    public void setNaujaGrupe(Grupe naujaGrupe) {
+        this.naujaGrupe = naujaGrupe;
     }
 }

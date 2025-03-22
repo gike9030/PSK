@@ -24,7 +24,7 @@ public class GrupeConverter implements Converter {
             return null;
         }
         Long id = Long.valueOf(value);
-        return grupeMapper.findById(id); // must guarantee this returns correct group
+        return grupeMapper.findById(id);
     }
 
     @Override

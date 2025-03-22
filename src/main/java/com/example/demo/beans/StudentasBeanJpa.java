@@ -39,16 +39,13 @@ public class StudentasBeanJpa implements Serializable {
     @Inject
     private GrupeDAO grupeDAO;
 
+    @Inject
+    private EntityManager em;
+
     @PostConstruct
     public void init() {
         visiStudentai = studentasDAO.getAllStudents();
         visosGrupes = grupeDAO.getAllGroupes();
-    }
-    @Inject
-    private EntityManager em;
-
-    public List<PasirenkamasKursas> getVisiKursai() {
-        return em.createQuery("SELECT k FROM PasirenkamasKursas k", PasirenkamasKursas.class).getResultList();
     }
 
     public void pridetiStudenta() {
@@ -69,26 +66,26 @@ public class StudentasBeanJpa implements Serializable {
         visiStudentai = studentasDAO.getAllStudents();
     }
 
+    public List<PasirenkamasKursas> getVisiKursai() {
+        return em.createQuery("SELECT k FROM PasirenkamasKursas k", PasirenkamasKursas.class).getResultList();
+    }
+
+    //getters, setters
     public Studentas getNaujasStudentas() {
         return naujasStudentas;
     }
-
     public void setNaujasStudentas(Studentas naujasStudentas) {
         this.naujasStudentas = naujasStudentas;
     }
-
     public List<Studentas> getVisiStudentai() {
         return visiStudentai;
     }
-
     public List<Grupe> getVisosGrupes() {
         return visosGrupes;
     }
-
     public Long getSelectedGrupeId() {
         return selectedGrupeId;
     }
-
     public void setSelectedGrupeId(Long selectedGrupeId) {
         this.selectedGrupeId = selectedGrupeId;
     }

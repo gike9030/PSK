@@ -17,7 +17,7 @@ import java.io.Reader;
 @ApplicationScoped
 public class MyBatisProducer {
 
-    private static final String MYBATIS_CONFIG = "mybatis-config.xml"; // Ensure this file exists in src/main/resources
+    private static final String MYBATIS_CONFIG = "mybatis-config.xml";
 
     private SqlSessionFactory sqlSessionFactory;
 
@@ -40,7 +40,7 @@ public class MyBatisProducer {
     @Produces
     @ApplicationScoped
     public SqlSession produceSqlSession(SqlSessionFactory sqlSessionFactory) {
-        return sqlSessionFactory.openSession(true); // Auto-commit enabled
+        return sqlSessionFactory.openSession(true);
     }
 
     @Produces
@@ -52,7 +52,7 @@ public class MyBatisProducer {
     @Produces
     @ApplicationScoped
     public GrupeMapper produceGrupeMapper(SqlSession sqlSession) {
-        return sqlSession.getMapper(GrupeMapper.class); // Producing GrupeMapper
+        return sqlSession.getMapper(GrupeMapper.class);
     }
 
     @Produces
