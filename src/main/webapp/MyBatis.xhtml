@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<f:view>
+    <h:head>
+        <title>MyBatis Duomenų Valdymo Sistema</title>
+    </h:head>
+
+    <h:body>
+        <h1>MyBatis Duomenų Valdymo Sistema</h1>
+
+        <!-- Grupės -->
+        <h2>Esamos Grupės</h2>
+        <h:dataTable value="#{grupeBeanMyBatis.visosGrupes}" var="grupe" border="1">
+            <h:column>
+                <f:facet name="header">ID</f:facet>
+                #{grupe.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Specialybė</f:facet>
+                #{grupe.specialybe}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Kursas</f:facet>
+                #{grupe.kursas}
+            </h:column>
+        </h:dataTable>
+
+        <h2>Pridėti naują grupę</h2>
+        <h:form>
+            <h:outputLabel value="Specialybė: "/>
+            <h:inputText value="#{grupeBeanMyBatis.naujaGrupe.specialybe}" required="true"/><br/><br/>
+            <h:outputLabel value="Kursas: "/>
+            <h:inputText value="#{grupeBeanMyBatis.naujaGrupe.kursas}" required="true"/><br/><br/>
+            <h:commandButton value="Pridėti Grupę" action="#{grupeBeanMyBatis.pridetiGrupe}"/>
+        </h:form>
+
+        <hr/>
+
+        <!-- Pasirenkami Kursai -->
+        <h2>Esami Pasirenkami Kursai</h2>
+        <h:dataTable value="#{pasirenkamasKursasBeanMyBatis.visiKursai}" var="kursas" border="1">
+            <h:column>
+                <f:facet name="header">ID</f:facet>
+                #{kursas.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Pavadinimas</f:facet>
+                #{kursas.pavadinimas}
+            </h:column>
+        </h:dataTable>
+
+        <h2>Pridėti Naują Kursą</h2>
+        <h:form>
+            <h:outputLabel value="Pavadinimas: "/>
+            <h:inputText value="#{pasirenkamasKursasBeanMyBatis.naujasKursas.pavadinimas}" required="true"/><br/><br/>
+            <h:commandButton value="Pridėti Kursą" action="#{pasirenkamasKursasBeanMyBatis.pridetiKursa}"/>
+        </h:form>
+
+        <hr/>
+
+        <!-- Studentai -->
+        <h2>Esami Studentai</h2>
+        <h:dataTable value="#{studentasBeanMyBatis.visiStudentai}" var="studentas" border="1">
+            <h:column>
+                <f:facet name="header">ID</f:facet>
+                #{studentas.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Vardas</f:facet>
+                #{studentas.vardas}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Pavarde</f:facet>
+                #{studentas.pavarde}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Grupė</f:facet>
+                #{studentas.grupe != null ? studentas.grupe.specialybe.concat(studentas.grupe.kursas) : 'No Group'}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Pasirenkami Kursai</f:facet>
+                <ui:repeat value="#{studentas.pasirenkamiKursai}" var="kursas">
+                    #{kursas.pavadinimas}<br/>
+                </ui:repeat>
+            </h:column>
+        </h:dataTable>
+
+        <h2>Pridėti Naują Studentą</h2>
+        <h:form>
+            <h:outputLabel value="Vardas: "/>
+            <h:inputText value="#{studentasBeanMyBatis.naujasStudentas.vardas}" required="true"/><br/><br/>
+            <h:outputLabel value="Pavarde: "/>
+            <h:inputText value="#{studentasBeanMyBatis.naujasStudentas.pavarde}" required="true"/><br/><br/>
+
+            <h:outputLabel value="Grupė: "/>
+            <h:selectOneMenu value="#{studentasBeanMyBatis.selectedGrupeId}">
+                <f:selectItems value="#{studentasBeanMyBatis.visosGrupes}" var="grupe"
+                               itemValue="#{grupe.id}" itemLabel="#{grupe.kursas} - #{grupe.specialybe}"/>
+            </h:selectOneMenu><br/><br/>
+
+            <h:outputLabel value="Pasirenkami kursai: "/>
+            <h:selectManyCheckbox value="#{studentasBeanMyBatis.selectedKursaiIds}">
+                <f:selectItems value="#{pasirenkamasKursasBeanMyBatis.visiKursai}" var="kursas"
+                               itemLabel="#{kursas.pavadinimas}" itemValue="#{kursas.id}"/>
+            </h:selectManyCheckbox><br/><br/>
+
+            <h:commandButton value="Pridėti Studentą" action="#{studentasBeanMyBatis.pridetiStudenta}"/>
+        </h:form>
+
+    </h:body>
+</f:view>
+</html>

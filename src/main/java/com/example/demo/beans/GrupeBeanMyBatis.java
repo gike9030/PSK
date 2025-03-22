@@ -1,7 +1,8 @@
 package com.example.demo.beans;
 
+import com.example.demo.dao.GrupeDAO;
 import com.example.demo.entities.Grupe;
-import com.example.demo.services.GrupeServiceMyBatis;
+import com.example.demo.mybatis.mappers.GrupeMapper;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -18,11 +19,11 @@ public class GrupeBeanMyBatis implements Serializable {
     private List<Grupe> visosGrupes;
 
     @Inject
-    private GrupeServiceMyBatis grupeServiceMyBatis;
+    private GrupeMapper grupeMapper;
 
     @PostConstruct
     public void init() {
-        visosGrupes = grupeServiceMyBatis.getAllGrupesMyBatis();
+        visosGrupes = grupeMapper.findAll();
     }
 
     public List<Grupe> getVisosGrupes() {
@@ -39,8 +40,8 @@ public class GrupeBeanMyBatis implements Serializable {
 
     // Add a new group using MyBatis
     public void pridetiGrupe() {
-        grupeServiceMyBatis.addGrupeMyBatis(naujaGrupe);
+        grupeMapper.insert(naujaGrupe);
         naujaGrupe = new Grupe();  // Reset after adding
-        visosGrupes = grupeServiceMyBatis.getAllGrupesMyBatis();
+        visosGrupes = grupeMapper.findAll();
     }
 }

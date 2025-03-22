@@ -1,7 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.entities.Grupe;
-import com.example.demo.services.GrupeServiceMyBatis;
+import com.example.demo.mybatis.mappers.GrupeMapper;
 
 import javax.enterprise.inject.spi.CDI;
 import javax.faces.component.UIComponent;
@@ -12,10 +12,10 @@ import javax.faces.convert.FacesConverter;
 @FacesConverter("grupeConverter")
 public class GrupeConverter implements Converter {
 
-    private GrupeServiceMyBatis grupeServiceMyBatis;
+    private GrupeMapper grupeMapper;
 
     public GrupeConverter() {
-        grupeServiceMyBatis = CDI.current().select(GrupeServiceMyBatis.class).get();
+        grupeMapper = CDI.current().select(GrupeMapper.class).get();
     }
 
     @Override
@@ -24,7 +24,7 @@ public class GrupeConverter implements Converter {
             return null;
         }
         Long id = Long.valueOf(value);
-        return grupeServiceMyBatis.getGrupeById(id); // must guarantee this returns correct group
+        return grupeMapper.findById(id); // must guarantee this returns correct group
     }
 
     @Override

@@ -11,7 +11,7 @@ public class Studentas {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String pavadinimas;
+    private String pavarde;
     private String vardas;
 
     @ManyToOne
@@ -26,8 +26,8 @@ public class Studentas {
     // Constructors
     public Studentas() {}
 
-    public Studentas(String pavadinimas, String vardas) {
-        this.pavadinimas = pavadinimas;
+    public Studentas(String pavarde, String vardas) {
+        this.pavarde = pavarde;
         this.vardas = vardas;
     }
 
@@ -48,12 +48,12 @@ public class Studentas {
         this.id = id;
     }
 
-    public String getPavadinimas() {
-        return pavadinimas;
+    public String getPavarde() {
+        return pavarde;
     }
 
-    public void setPavadinimas(String pavadinimas) {
-        this.pavadinimas = pavadinimas;
+    public void setPavarde(String pavadinimas) {
+        this.pavarde = pavadinimas;
     }
 
     public String getVardas() {
@@ -76,7 +76,7 @@ public class Studentas {
     public String toString() {
         return "Studentas{" +
                 "id=" + id +
-                ", pavadinimas='" + pavadinimas + '\'' +
+                ", pavadinimas='" + pavarde + '\'' +
                 ", vardas='" + vardas + '\'' +
                 ", grupe=" + (grupe != null ? grupe.getId() : "null") +
                 '}';

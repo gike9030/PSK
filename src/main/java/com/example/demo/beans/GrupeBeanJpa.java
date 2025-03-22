@@ -1,7 +1,7 @@
 package com.example.demo.beans;
 
+import com.example.demo.dao.GrupeDAO;
 import com.example.demo.entities.Grupe;
-import com.example.demo.services.GrupeServiceJpa;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -18,11 +18,11 @@ public class GrupeBeanJpa implements Serializable {
     private List<Grupe> visosGrupes;
 
     @Inject
-    private GrupeServiceJpa grupeService;
+    private GrupeDAO grupeDAO;
 
     @PostConstruct
     public void init() {
-        visosGrupes = grupeService.getAllGrupesJpa();  // Initialize group list
+        visosGrupes = grupeDAO.getAllGroupes();  // Initialize group list
     }
 
     public List<Grupe> getVisosGrupes() {
@@ -38,8 +38,8 @@ public class GrupeBeanJpa implements Serializable {
     }
 
     public void pridetiGrupe() {
-        grupeService.addGrupeJpa(naujaGrupe);
+        grupeDAO.addGrupe(naujaGrupe);
         naujaGrupe = new Grupe();  // Reset after adding
-        visosGrupes = grupeService.getAllGrupesJpa();
+        visosGrupes = grupeDAO.getAllGroupes();
     }
 }

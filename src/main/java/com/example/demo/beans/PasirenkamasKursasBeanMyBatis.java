@@ -1,7 +1,7 @@
 package com.example.demo.beans;
 
 import com.example.demo.entities.PasirenkamasKursas;
-import com.example.demo.services.PasirenkamasKursasServiceMyBatis;
+import com.example.demo.mybatis.mappers.PasirenkamasKursasMapper;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -18,17 +18,17 @@ public class PasirenkamasKursasBeanMyBatis implements Serializable {
     private List<PasirenkamasKursas> visiKursai;
 
     @Inject
-    private PasirenkamasKursasServiceMyBatis kursasServiceMyBatis;
+    private PasirenkamasKursasMapper pasirenkamasKursasMapper;
 
     @PostConstruct
     public void init() {
-        visiKursai = kursasServiceMyBatis.getAllKursai();
+        visiKursai = pasirenkamasKursasMapper.findAll();
     }
 
     public void pridetiKursa() {
-        kursasServiceMyBatis.addKursas(naujasKursas);
+        pasirenkamasKursasMapper.insert(naujasKursas);
         naujasKursas = new PasirenkamasKursas();
-        visiKursai = kursasServiceMyBatis.getAllKursai();
+        visiKursai = pasirenkamasKursasMapper.findAll();
     }
 
     // Getters ir setters

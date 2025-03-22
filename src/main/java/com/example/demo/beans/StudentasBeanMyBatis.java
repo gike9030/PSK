@@ -1,16 +1,21 @@
 package com.example.demo.beans;
 
 import com.example.demo.entities.Grupe;
+import com.example.demo.entities.PasirenkamasKursas;
 import com.example.demo.entities.Studentas;
-import com.example.demo.services.GrupeServiceMyBatis;
-import com.example.demo.services.StudentasServiceMyBatis;
+import com.example.demo.mybatis.mappers.GrupeMapper;
+import com.example.demo.mybatis.mappers.PasirenkamasKursasMapper;
+import com.example.demo.mybatis.mappers.StudentasMapper;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Named("studentasBeanMyBatis")
 @RequestScoped
@@ -20,49 +25,52 @@ public class StudentasBeanMyBatis implements Serializable {
     private List<Studentas> visiStudentai;
     private List<Grupe> visosGrupes;
     private Long selectedGrupeId;
+    private List<Long> selectedKursaiIds  = new ArrayList<Long>();
 
     @Inject
-    private StudentasServiceMyBatis studentasServiceMyBatis;
-
+    private StudentasMapper studentasMapper;
     @Inject
-    private GrupeServiceMyBatis grupeServiceMyBatis;
+    private GrupeMapper grupeMapper;
+    @Inject
+    private PasirenkamasKursasMapper pasirenkamasKursasMapper;
 
     @PostConstruct
     public void init() {
-        visiStudentai = studentasServiceMyBatis.getAllStudentai();
-        visosGrupes = grupeServiceMyBatis.getAllGrupesMyBatis();
+        visiStudentai = studentasMapper.findAll();
+        visosGrupes = grupeMapper.findAll();
     }
-    public Long getSelectedGrupeId() {
-        return selectedGrupeId;
-    }
+    public void pridetiStudenta() {
+        Grupe pasirinktaGrupe = grupeMapper.findById(selectedGrupeId);
+        naujasStudentas.setGrupe(pasirinktaGrupe);
+        List<PasirenkamasKursas> kursai = selectedKursaiIds.stream()
+                .map(id -> pasirenkamasKursasMapper.findById(id))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+        naujasStudentas.setPasirenkamiKursai(kursai);
+        studentasMapper.insert(naujasStudentas);
 
-    public void setSelectedGrupeId(Long selectedGrupeId) {
-        this.selectedGrupeId = selectedGrupeId;
+        for (PasirenkamasKursas kursas : kursai) {
+            studentasMapper.insertStudentoKursas(naujasStudentas.getId(), kursas.getId());
+        }
+        naujasStudentas = new Studentas();
+        selectedGrupeId = null;  // resetinam ID
+        selectedKursaiIds.clear();
+        visiStudentai = studentasMapper.findAll();
     }
-
-    public List<Studentas> getVisiStudentai() {
-        return visiStudentai;
-    }
-
+    //getters & setters
+    public Long getSelectedGrupeId() {return selectedGrupeId;}
+    public void setSelectedGrupeId(Long selectedGrupeId) {this.selectedGrupeId = selectedGrupeId;}
+    public List<Studentas> getVisiStudentai() {return visiStudentai;}
     public List<Grupe> getVisosGrupes() {
         return visosGrupes;
     }
-
     public Studentas getNaujasStudentas() {
         return naujasStudentas;
     }
-
     public void setNaujasStudentas(Studentas naujasStudentas) {
         this.naujasStudentas = naujasStudentas;
     }
+    public List<Long> getSelectedKursaiIds() {return selectedKursaiIds;}
+    public void setSelectedKursaiIds(List<Long> selectedKursaiIds) {this.selectedKursaiIds = selectedKursaiIds;}
 
-    public void pridetiStudenta() {
-        Grupe pasirinktaGrupe = grupeServiceMyBatis.getGrupeById(selectedGrupeId);
-        naujasStudentas.setGrupe(pasirinktaGrupe);
-        studentasServiceMyBatis.addStudentas(naujasStudentas);
-
-        naujasStudentas = new Studentas();
-        selectedGrupeId = null;  // resetinam ID
-        visiStudentai = studentasServiceMyBatis.getAllStudentai();
-    }
 }
